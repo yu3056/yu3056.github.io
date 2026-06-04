@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>高雄市彌陀國小英語闖關活動自主學習網 (四五六年級)</title>
+    <style>
+        :root {
+            --primary-color: #2C3E50;
+            --secondary-color: #FFF;
+            --accent-color: #E67E22;
+            --background-color: #F5F7FA;
+            --text-color: #333;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif, "Microsoft JhengHei";
+            background-color: var(--background-color);
+            color: var(--text-color);
+            margin: 0;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            background: var(--secondary-color);
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.08);
+        }
+
+        h1 {
+            text-align: center;
+            color: var(--primary-color);
+            margin-bottom: 5px;
+        }
+
+        .subtitle {
+            text-align: center;
+            color: #666;
+            margin-bottom: 30px;
+            font-size: 15px;
+        }
+
+        /* 年級選單 */
+        .grade-tabs {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-bottom: 30px;
+            border-bottom: 2px solid #E1E8ED;
+            padding-bottom: 15px;
+        }
+
+        .tab-btn {
+            background-color: #E1E8ED;
+            border: none;
+            padding: 12px 24px;
+            font-size: 16px;
+            font-weight: bold;
+            border-radius: 25px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .tab-btn:hover {
+            background-color: #CBD5E0;
+        }
+
+        .tab-btn.active {
+            background-color: var(--primary-color);
+            color: white;
+            transform: scale(1.05);
+        }
+
+        /* 表格樣式 */
+        .content-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 10px;
+            font-size: 16px;
+        }
+
+        .content-table th {
+            background-color: var(--primary-color);
+            color: white;
+            padding: 15px;
+            text-align: left;
+        }
+
+        .content-table th:nth-child(1) { width: 10%; text-align: center; }
+        .content-table th:nth-child(2) { width: 73%; }
+        .content-table th:nth-child(3) { width: 17%; text-align: center; }
+
+        .content-table td {
+            padding: 15px;
+            border-bottom: 1px solid #E1E8ED;
+            line-height: 1.6;
+        }
+
+        .content-table td:nth-child(1) { text-align: center; font-weight: bold; color: #555; }
+        
+        .content-table tr:hover {
+            background-color: #F7FAFC;
+        }
+
+        /* 英文對話排版 */
+        .dialogue-box {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .sentence {
+            border-left: 3px solid #E2E8F0;
+            padding-left: 10px;
+        }
+
+        /* 針對不同人稱給予不同外框顏色，方便高年級區分對話角色 */
+        .sentence.A { border-left-color: #34495E; }
+        .sentence.B { border-left-color: #E67E22; }
+
+        .english-text {
+            font-size: 18px;
+            font-weight: 600;
+            color: #2D3748;
+        }
+
+        .chinese-text {
+            font-size: 14px;
+            color: #718096;
+            margin-top: 2px;
+        }
+
+        /* 按鈕樣式 */
+        .play-btn {
+            background-color: #3498DB;
+            color: white;
+            border: none;
+            padding: 12px 15px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 15px;
+            font-weight: bold;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 5px;
+            transition: background 0.2s, transform 0.1s;
+            width: 100%;
+            box-shadow: 0 3px 6px rgba(52, 152, 219, 0.2);
+        }
+
+        .play-btn:hover {
+            background-color: #2980B9;
+        }
+
+        .play-btn:active {
+            transform: scale(0.97);
+        }
+
+        /* 手機板優化 */
+        @media (max-width: 768px) {
+            body { padding: 10px; }
+            .container { padding: 15px; }
+            .content-table th:nth-child(1), .content-table td:nth-child(1) { width: 12%; }
+            .content-table th:nth-child(3), .content-table td:nth-child(3) { width: 28%; }
+            .english-text { font-size: 16px; }
+            .chinese-text { font-size: 13px; }
+            .tab-btn { padding: 10px 16px; font-size: 14px; }
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h1>高雄市彌陀國小英語闖關活動</h1>
+    <p class="subtitle">點選上方年級切換關卡，點擊「🔊 播放語音」即可進行聽力練習喔！</p>
+
+    <!-- 年級切換選單 -->
+    <div class="grade-tabs" id="gradeTabs">
+        <button class="tab-btn active" onclick="switchGrade('4up', this)">四上</button>
+        <button class="tab-btn" onclick="switchGrade('5up', this)">五上</button>
+        <button class="tab-btn" onclick="switchGrade('6up', this)">六上</button>
+    </div>
+
+    <!-- 闖關內容表格 -->
+    <table class="content-table">
+        <thead>
+            <tr>
+                <th>關卡</th>
+                <th>題目內容</th>
+                <th>語音檔</th>
+            </tr>
+        </thead>
+        <tbody id="quizBody">
+            <!-- 由 JavaScript 動態引入資料 -->
+        </tbody>
+    </table>
+</div>
+
+<script>
+// 四、五、六年級題庫資料來源[cite: 1]
+const quizData = {
+    '4up': [
+        { id: 1, dialog: [{role: "A", en: "How’s the weather today ?", ch: "今天天氣如何？"}, {role: "B", en: "It’s sunny.", ch: "是晴天。"}] },
+        { id: 2, dialog: [{role: "A", en: "What do you want?", ch: "你想要什麼？"}, {role: "B", en: "I want an apple.", ch: "我想要一個蘋果。"}] },
+        { id: 3, dialog: [{role: "A", en: "Can you swim?", ch: "你會游泳嗎？"}, {role: "B", en: "Yes, I can. / No, I can’t.", ch: "是的，我會。/ 不，我不會。"}] },
+        { id: 4, dialog: [{role: "A", en: "Do you like hamburgers?", ch: "你喜歡漢堡嗎？"}, {role: "B", en: "Yes, I do. / No, I don’t.", ch: "是的，我喜歡。/ 不，我不喜歡。"}] },
+        { id: 5, dialog: [{role: "A", en: "What color is your hair?", ch: "你的頭髮是什麼顏色?"}, {role: "B", en: "It is black.", ch: "它是黑色。"}] },
+        { id: 6, dialog: [{role: "A", en: "Are you happy?", ch: "你快樂嗎？"}, {role: "B", en: "Yes, I am. / No, I’m not.", ch: "是的，我是。/ 不，我不是。"}] },
+        { id: 7, dialog: [{role: "A", en: "What are you doing?", ch: "你正在做什麼？"}, {role: "B", en: "I’m reading.", ch: "我正在閱讀。"}] },
+        { id: 8, dialog: [{role: "A", en: "What time is it?", ch: "現在幾點？"}, {role: "B", en: "It’s eight o’clock.", ch: "現在8點。"}] },
+        { id: 9, dialog: [{role: "A", en: "Where’s my key?", ch: "我的鑰匙在哪裡？"}, {role: "B", en: "It’s under the desk.", ch: "它在書桌底下。"}] },
+        { id: 10, dialog: [{role: "A", en: "Where are you?", ch: "你在哪裡？"}, {role: "B", en: "I’m in the living room.", ch: "我在客廳。"}] }
+    ],
+    '5up': [
+        { id: 1, dialog: [{role: "Anne", en: "Are you going to Tardyhill Nature Park?", ch: "你們要去漯底山嗎？"}, {role: "Gilbert", en: "Yes, we are.", ch: "是呀。"}] },
+        { id: 2, dialog: [{role: "Gilbert", en: "Would you like to join us?", ch: "你要不要和我們一起去？"}, {role: "Anne", en: "Sorry, we’re going to Gangshan in twenty minutes.", ch: "抱歉，我們二十分鐘後要去岡山。"}] },
+        { id: 3, dialog: [{role: "Anne", en: "How can you get to Tardyhill Nature Park?", ch: "你們怎麼去漯底山？"}, {role: "Gilbert", en: "We can get there by bike.", ch: "我們可以騎腳踏車去。"}] },
+        { id: 4, dialog: [{role: "Gilbert", en: "Can you get to Gangshang by car?", ch: "你們可以坐車去岡山嗎？"}, {role: "Anne", en: "Yes, we can get there by car.", ch: "可以，我們可以坐車去岡山。"}] },
+        { id: 5, dialog: [{role: "Gilbert", en: "What’s your favorite subject?", ch: "你最喜歡的科目是甚麼？"}, {role: "Anne", en: "My favorite subject is PE.", ch: "我最喜歡的科目是體育。"}] },
+        { id: 6, dialog: [{role: "Gilbert", en: "Do you play sports after school?", ch: "你放學後運動嗎？(sports指的是競賽類運動)"}, {role: "Anne", en: "No, I have math lessons after school.", ch: "沒有，我放學後有數學課。"}] },
+        { id: 7, dialog: [{role: "Anne", en: "What’s your brother’s favorite subject?", ch: "你哥哥最喜歡的科目是甚麼？"}, {role: "Gilbert", en: "His favorite subject is art.", ch: "他最喜歡的科目是美術。"}] },
+        { id: 8, dialog: [{role: "Anne", en: "What does your sister do after work?", ch: "你姊姊下班後都做甚麼？"}, {role: "Gilbert", en: "She usually listens to music and walks the dog.", ch: "她通常都聽音樂和遛狗。"}] },
+        { id: 9, dialog: [{role: "Anne", en: "What does she usually eat for dinner?", ch: "她晚餐通常都吃甚麼？"}, {role: "Gilbert", en: "She eats milkfish and pot stickers.", ch: "她吃虱目魚和鍋貼。"}] },
+        { id: 10, dialog: [{role: "Gilbert", en: "Aren’t you going hiking?", ch: "你不是要去健行嗎？"}, {role: "Anne", en: "Yes, but I forgot my sneakers.", ch: "是呀，但我忘了帶布鞋。"}] }
+    ],
+    '6up': [
+        { id: 1, dialog: [{role: "Sherry", en: "What does Benson do?", ch: "Benson是做什麼的？"}, {role: "May", en: "He’s a PE teacher in my school.", ch: "他是我們學校的體育老師。"}] },
+        { id: 2, dialog: [{role: "Sherry", en: "When do you have music class?", ch: "你甚麼時候上音樂課？"}, {role: "May", en: "I have music class on Thursdays.", ch: "我每周四上音樂課。"}] },
+        { id: 3, dialog: [{role: "Sherry", en: "What do you have for breakfast?", ch: "你早餐吃甚麼？"}, {role: "May", en: "I have Chinese omelette with ham and a cup of milk tea for breakfast.", ch: "我早餐吃火腿蛋餅和一杯奶茶。"}] },
+        { id: 4, dialog: [{role: "Sherry", en: "What’s wrong with you?", ch: "你怎麼了？"}, {role: "May", en: "I feel tired all the time. I have a fever and a headache.", ch: "我一直覺得很疲倦。我發燒又頭痛。"}] },
+        { id: 5, dialog: [{role: "Sherry", en: "Would you like some chocolate cake?", ch: "想吃點巧克力蛋糕嗎？"}, {role: "May", en: "Yes, I have a sweet tooth.", ch: "好啊，我很喜歡吃甜食。"}] },
+        { id: 6, dialog: [{role: "Sherry", en: "How’s the weather in Kaohsiung?", ch: "高雄的天氣怎麼樣?"}, {role: "May", en: "It’s sunny. There are no clouds in the sky.", ch: "晴天。萬里無雲呢！"}] },
+        { id: 7, dialog: [{role: "Sherry", en: "Where is Benson from?", ch: "Benson從哪裡來？"}, {role: "May", en: "He’s from Taiwan. But he doesn’t speak Chinese well.", ch: "他是台灣人。可是他中文說得不好。"}] },
+        { id: 8, dialog: [{role: "Sherry", en: "Do you speak English?", ch: "你說英語嗎？"}, {role: "May", en: "Yes, I speak English.", ch: "是的，我說英語。"}] },
+        { id: 9, dialog: [{role: "Sherry", en: "I’m going to the night market to get some food. Do you want to come along?", ch: "我要去夜市買一些吃的。你要一起去嗎？"}, {role: "May", en: "That sounds good. Let’s hit the road.", ch: "聽起來真棒。我們走吧！"}] },
+        { id: 10, dialog: [{role: "Sherry", en: "How does stinky tofu taste?", ch: "臭豆腐吃起來怎麼樣？"}, {role: "May", en: "It tastes good but smells so bad.", ch: "滿好吃的，可是不好聞。"}] }
+    ]
+};
+
+function switchGrade(gradeKey, element) {
+    if(element) {
+        const buttons = document.querySelectorAll('.tab-btn');
+        buttons.forEach(btn => btn.classList.remove('active'));
+        element.classList.add('active');
+    }
+
+    const tbody = document.getElementById('quizBody');
+    tbody.innerHTML = '';
+
+    quizData[gradeKey].forEach(item => {
+        const tr = document.createElement('tr');
+        let dialogueHtml = `<div class="dialogue-box">`;
+        let fullSpeechText = "";
+        
+        item.dialog.forEach(d => {
+            // 判斷角色給予邊框顏色
+            const isRoleA = (d.role === 'A' || d.role === 'Anne' || d.role === 'Sherry');
+            dialogueHtml += `
+                <div class="sentence ${isRoleA ? 'A' : 'B'}">
+                    <div class="english-text"><strong>${d.role}:</strong> ${d.en}</div>
+                    <div class="chinese-text">${d.role}: ${d.ch}</div>
+                </div>
+            `;
+            fullSpeechText += `${d.role} says: ${d.en} ... `;
+        });
+        dialogueHtml += `</div>`;
+
+        const safeSpeechText = fullSpeechText.replace(/'/g, "\\'").replace(/"/g, '&quot;');
+
+        tr.innerHTML = `
+            <td>${item.id}</td>
+            <td>${dialogueHtml}</td>
+            <td>
+                <button class="play-btn" onclick="playAudio('${safeSpeechText}')">🔊 播放語音</button>
+            </td>
+        `;
+        tbody.appendChild(tr);
+    });
+}
+
+function playAudio(text) {
+    window.speechSynthesis.cancel();
+    const cleanText = text.replace(/___+/g, "blank").replace(/\//g, " or ");
+    const utterance = new SpeechSynthesisUtterance(cleanText);
+    utterance.lang = 'en-US';
+    utterance.rate = 0.90; // 高年級語速稍微調成 0.90，更符合正常對話速度
+    window.speechSynthesis.speak(utterance);
+}
+
+window.onload = function() {
+    switchGrade('4up', null);
+};
+</script>
+</body>
+</html>
